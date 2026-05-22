@@ -18,12 +18,31 @@ public partial class DataTable : Panel
     // TODO: Check with Sergio if there's a better structure here, as I don't need a Dictionary like ConditionalWeakTable
     internal HashSet<DataRow> Rows { get; private set; } = new();
 
+    internal double CalculateDesiredWidth()
+    {
+        double totalWidth = 0;
+        var elements = Children.Where(static e => e.Visibility == Visibility.Visible && e is DataColumn);
+        
+        foreach (DataColumn column in elements)
+        {
+            if (column.CurrentWidth.IsAbsolute)
+                totalWidth += column.CurrentWidth.Value;
+            else
+                totalWidth += Math.Max(column.DesiredSize.Width, column.MaxChildDesiredWidth);
+        }
+
+        _ = elements.TryGetNonEnumeratedCount(out int count);
+        totalWidth += Math.Max(0, count - 1) * ColumnSpacing;
+        return totalWidth;
+    }
+
     internal void ColumnResized()
     {
         InvalidateArrange();
 
         foreach (var row in Rows)
         {
+            row.InvalidateMeasure();
             row.InvalidateArrange();
         }
     }

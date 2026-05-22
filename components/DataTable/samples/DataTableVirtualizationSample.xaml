@@ -13,6 +13,8 @@
     <!--  We need to set height here to enable virtualization due to the SampleRenderer setup  -->
     <ListView Height="300"
               VerticalAlignment="Top"
+              ScrollViewer.HorizontalScrollMode="Enabled"
+              ScrollViewer.HorizontalScrollBarVisibility="Auto"
               ItemsSource="{x:Bind InventoryItems}">
         <ListView.Header>
             <Border Padding="8,4,0,4"
@@ -21,11 +23,14 @@
                 <interactivity:Interaction.Behaviors>
                     <behaviors:StickyHeaderBehavior />
                 </interactivity:Interaction.Behaviors>
-                <controls:DataTable ColumnSpacing="16">
+                <controls:DataTable ColumnSpacing="16"
+                    ScrollViewer.HorizontalScrollMode="Enabled"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
                     <controls:DataColumn Content="Id" />
                     <controls:DataColumn CanResize="True"
+                                         MinWidth="120"
                                          Content="Name" />
-                    <controls:DataColumn CanResize="True">
+                    <controls:DataColumn CanResize="True" MinWidth="120">
                         <TextBlock FontWeight="SemiBold"
                                    Text="Description" />
                     </controls:DataColumn>
