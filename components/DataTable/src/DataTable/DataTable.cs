@@ -23,12 +23,16 @@ public partial class DataTable : Panel
         double totalWidth = 0;
         var elements = Children.Where(static e => e.Visibility == Visibility.Visible && e is DataColumn);
         
-        foreach (DataColumn column in elements)
+        foreach (DataColumn column in elements.Cast<DataColumn>())
         {
             if (column.CurrentWidth.IsAbsolute)
+            {
                 totalWidth += column.CurrentWidth.Value;
+            }
             else
+            {
                 totalWidth += Math.Max(column.DesiredSize.Width, column.MaxChildDesiredWidth);
+            }
         }
 
         totalWidth += Math.Max(0, elements.Count() - 1) * ColumnSpacing;
