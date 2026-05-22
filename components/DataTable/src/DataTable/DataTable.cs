@@ -31,8 +31,7 @@ public partial class DataTable : Panel
                 totalWidth += Math.Max(column.DesiredSize.Width, column.MaxChildDesiredWidth);
         }
 
-        _ = elements.TryGetNonEnumeratedCount(out int count);
-        totalWidth += Math.Max(0, count - 1) * ColumnSpacing;
+        totalWidth += Math.Max(0, elements.Count() - 1) * ColumnSpacing;
         return totalWidth;
     }
 
